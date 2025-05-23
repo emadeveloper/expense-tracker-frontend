@@ -1,12 +1,35 @@
-import './App.css'
+import React from 'react';
 
-function App() {
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
+import Login from './pages/Auth/Login';
+import Signup from './pages/Auth/Signup';
+import Home from './pages/Dashboard/Home';
+import Income from './pages/Dashboard/Income';
+import Expense from './pages/Dashboard/Expense';
 
+const App = () => {
   return (
-    <div className="bg-darkBg text-darkText min-h-screen">
-      <h1 className="text-primary text-4xl">Mi Expense Tracker</h1>
+    <div className=''>
+      <Router>
+        <Routes>
+          <Route path='/' element={<Root />} />
+          <Route path='login' exact element={<Login />}/>
+          <Route path='signUp' exact element={<Signup />}/>
+          <Route path='dashboard' exact element={<Home />}/>
+          <Route path='income' exact element={<Income />}/>
+          <Route path='expense' exact element={<Expense />}/>
+        </Routes>
+      </Router>
     </div>
-  )
-}
+  );
+};
 
-export default App
+export default App;
+
+const Root = () => {
+  //Check if token exists in LocalStorage
+  const isAuthenticated = !! localStorage.getItem('token');
+
+  // Redirect to dashboard if authenticated, otherwise to login
+  return isAuthenticated ? <Navigate to={'/dashboard'} /> : <Navigate to={'/login'} />;
+}
