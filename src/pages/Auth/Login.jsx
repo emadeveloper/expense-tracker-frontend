@@ -1,8 +1,7 @@
 import React, { useState } from 'react'
 import AuthLayout from '../../components/layout/AuthLayout'
-import { useNavigate } from 'react-router-dom';
 import Input from '../../components/inputs/Input';
-import { Link} from 'react-router-dom';
+import { Link, useNavigate} from 'react-router-dom';
 import { validateEmail } from '../../utils/helper';
 
 
