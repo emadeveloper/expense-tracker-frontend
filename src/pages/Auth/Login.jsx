@@ -2,11 +2,10 @@ import React, { useState } from 'react'
 import AuthLayout from '../../components/layout/AuthLayout'
 import Input from '../../components/inputs/Input';
 import { Link, useNavigate} from 'react-router-dom';
-import { validateEmail } from '../../utils/helper';
-
+import axios from 'axios';
 
 const Login = () => {
-  const [email, setEmail] = useState('');
+  const [usernameOrEmail, setUsernameOrEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
 
@@ -14,19 +13,47 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
 
-    if(!validateEmail(email)) {
-      setError('Invalid email address');
-      return;
+    // Validate inputs
+    if(!usernameOrEmail.trim()){
+      setError('Username or Email is required');
     }
 
-    if(!password) {
+    if(!password.trim()) {
       setError('Password is required');
       return;
     }
 
-    setError('');
+    if(password.length < 8) {
+      setError('Password must be at least 8 characters long');
+      return;
+    }
+
+    setError(null);
 
     //Login API call
+    try {
+      const response = await axios.post('http://localhost:8080/api/v1/auth/login', { 
+        usernameOrEmail, 
+        password
+      });
+      
+      const { token } = response.data;
+
+      // Store token in localStorage
+      localStorage.setItem('token', token);
+
+      // Redirect to dashboard
+      navigate('/dashboard');
+    } catch (err) {
+      if (err.response && err.response.status === 401) {
+        setError('Invalid username or password. Please try again.');
+      }
+      else if (err.response?.status === 400) {
+        setError('Bad request. Please check your input.');
+      } else {
+        setError('An error occurred. Please try again later.');
+      }
+    }
   }
 
 
@@ -39,11 +66,12 @@ const Login = () => {
 
         <form onSubmit={handleLogin}>
           <Input 
-            value={email}
-            onChange={({ target }) => setEmail(target.value)}
-            label='Email Address'
-            placeholder='emmanuel@example.com'
+            value={usernameOrEmail}
+            onChange={({ target }) => setUsernameOrEmail(target.value)}
+            label='Email Address or Username'
+            placeholder='Username or email@example.com'
             type='text'
+            required
           />
           <Input 
             value={password}
@@ -51,6 +79,7 @@ const Login = () => {
             label='Password'
             placeholder='Min 8 characters'
             type='password'
+            required
           />
 
           {error && <p className='text-red-500 text-xs pb-2.5'>{error}</p>}

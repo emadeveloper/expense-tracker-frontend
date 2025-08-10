@@ -2,7 +2,9 @@ import React from 'react'
 
 const Home = () => {
   return (
-    <div>Home</div>
+    <div>
+      <p>You successfully logged into the app. This is your Dashboard</p>
+    </div>
   )
 }
 
