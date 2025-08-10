@@ -2,12 +2,15 @@ import React, { useState } from 'react'
 import AuthLayout from '../../components/layout/AuthLayout'
 import Input from '../../components/inputs/Input';
 import { Link, useNavigate} from 'react-router-dom';
-import axios from 'axios';
+import axiosInstance from '../../utils/axiosInstance';
 
 const Login = () => {
   const [usernameOrEmail, setUsernameOrEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
+
+  // Base URL for API requests
+  const BASE_URL = import.meta.env.VITE_BASE_URL;
 
   // Handle Login Form Submit
   const handleLogin = async (e) => {
@@ -32,18 +35,18 @@ const Login = () => {
 
     //Login API call
     try {
-      const response = await axios.post('http://localhost:8080/api/v1/auth/login', { 
-        usernameOrEmail, 
+      const response = await axiosInstance.post('/auth/login', {
+        usernameOrEmail,
         password
       });
       
       const { token } = response.data;
-
       // Store token in localStorage
       localStorage.setItem('token', token);
 
       // Redirect to dashboard
       navigate('/dashboard');
+    
     } catch (err) {
       if (err.response && err.response.status === 401) {
         setError('Invalid username or password. Please try again.');
