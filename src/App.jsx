@@ -6,10 +6,14 @@ import Signup from './pages/Auth/Signup';
 import Home from './pages/Dashboard/Home';
 import Income from './pages/Dashboard/Income';
 import Expense from './pages/Dashboard/Expense';
+//import { UserContext } from './context/UserContext';
+import UserProvider from './context/UserProvider';
 
 const App = () => {
   return (
-    <div className=''>
+
+    <UserProvider>
+      <div>
       <Router>
         <Routes>
           <Route path='/' element={<Root />} />
@@ -21,6 +25,8 @@ const App = () => {
         </Routes>
       </Router>
     </div>
+    </UserProvider>
+    
   );
 };
 

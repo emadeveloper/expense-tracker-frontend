@@ -1,66 +1,77 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import AuthLayout from '../../components/layout/AuthLayout'
 import Input from '../../components/inputs/Input';
 import { Link, useNavigate} from 'react-router-dom';
 import axiosInstance from '../../utils/axiosInstance';
+import { UserContext } from '../../context/UserContext';
 
 const Login = () => {
   const [usernameOrEmail, setUsernameOrEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
 
-  // Base URL for API requests
-  const BASE_URL = import.meta.env.VITE_BASE_URL;
+  const { updateUser } = useContext(UserContext);
+  const navigate = useNavigate();
 
   // Handle Login Form Submit
   const handleLogin = async (e) => {
     e.preventDefault();
 
     // Validate inputs
-    if(!usernameOrEmail.trim()){
+    if (!usernameOrEmail.trim()) {
       setError('Username or Email is required');
+      return;
     }
 
-    if(!password.trim()) {
+    if (!password.trim()) {
       setError('Password is required');
       return;
     }
 
-    if(password.length < 8) {
+    if (password.length < 8) {
       setError('Password must be at least 8 characters long');
       return;
     }
 
     setError(null);
 
-    //Login API call
     try {
       const response = await axiosInstance.post('/auth/login', {
         usernameOrEmail,
         password
       });
-      
-      const { token } = response.data;
-      // Store token in localStorage
-      localStorage.setItem('token', token);
 
-      // Redirect to dashboard
+      console.log('Login response:', response.data);
+
+      const { accessToken, userResponseDTO } = response.data;
+
+      if (accessToken) {
+        localStorage.setItem('token', accessToken);
+      } else {
+        console.warn('No token received from backend');
+      }
+
+      if (userResponseDTO) {
+        updateUser(userResponseDTO);
+      } else {
+        updateUser(null);
+      }
+
       navigate('/dashboard');
-    
     } catch (err) {
+      localStorage.removeItem('token');
+      updateUser(null);
+
       if (err.response && err.response.status === 401) {
         setError('Invalid username or password. Please try again.');
-      }
-      else if (err.response?.status === 400) {
+      } else if (err.response?.status === 400) {
         setError('Bad request. Please check your input.');
       } else {
         setError('An error occurred. Please try again later.');
       }
     }
-  }
+  };
 
-
-  const navigate = useNavigate();
   return (
     <AuthLayout>
       <div className='lg:w-[70%] h-3/4 md:h-full flex flex-col justify-center'>
@@ -100,7 +111,7 @@ const Login = () => {
         </form>
       </div>
     </AuthLayout>
-  )
-}
+  );
+};
 
-export default Login
+export default Login;
