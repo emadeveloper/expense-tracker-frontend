@@ -70,21 +70,6 @@ const Signup = () => {
                 const uploadData = await uploadResponse.json();
                 profileImageURL = uploadData.secure_url; // Get the uploaded image URL
             } */
-        
-            /* const response = await fetch('http://localhost:8080/api/v1/auth/signup', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    fullName,
-                    username,
-                    email,
-                    password,
-                    confirmPassword
-                }),
-            }); */
-
             const response = await axiosInstance.post('/auth/signup', {
                 fullName,
                 username,
