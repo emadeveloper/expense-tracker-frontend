@@ -35,13 +35,12 @@ const Login = () => {
 
     setError(null);
 
+    // Login API Call
     try {
       const response = await axiosInstance.post('/auth/login', {
         usernameOrEmail,
         password
       });
-
-      console.log('Login response:', response.data);
 
       const { accessToken, userResponseDTO } = response.data;
 

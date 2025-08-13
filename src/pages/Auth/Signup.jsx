@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 
 import Input from "../../components/inputs/Input";
 import { Link, useNavigate } from "react-router-dom";
 import { validateEmail } from "../../utils/helper";
 import AuthLayout from "../../components/layout/AuthLayout";
 import ProfilePhotoSelector from "../../components/inputs/ProfilePhotoSelector";
+import axiosInstance from "../../utils/axiosInstance";
+import { UserContext } from "../../context/UserContext";
 
 const Signup = () => {
     const [profilePic, setProfilePic] = useState(null);
@@ -17,6 +19,8 @@ const Signup = () => {
     const [error, setError] = useState(null);
 
     const navigate = useNavigate();
+
+    const { updateUser } = useContext(UserContext);
 
     // Handle Signup Form Submit
     const handleSignUp = async (e) => {
@@ -40,7 +44,8 @@ const Signup = () => {
         }
 
         if (!confirmPassword || password.length < 8) {
-            setError('Confirm password is required');
+            setError('Confirm password is required. 8 characters min.');
+            return;
         }
 
         if (password !== confirmPassword) {
@@ -48,7 +53,7 @@ const Signup = () => {
             return;
         }
 
-        setError('');
+        setError(null);
 
         // Signup API call
         try {
@@ -65,8 +70,8 @@ const Signup = () => {
                 const uploadData = await uploadResponse.json();
                 profileImageURL = uploadData.secure_url; // Get the uploaded image URL
             } */
-
-            const response = await fetch('http://localhost:8080/api/v1/auth/signup', {
+        
+            /* const response = await fetch('http://localhost:8080/api/v1/auth/signup', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -78,20 +83,41 @@ const Signup = () => {
                     password,
                     confirmPassword
                 }),
+            }); */
+
+            const response = await axiosInstance.post('/auth/signup', {
+                fullName,
+                username,
+                email,
+                password,
+                confirmPassword
+                //profileImageURL // Uncomment to handle profile image upload
             });
 
-            const data = await response.json();
+            const { accessToken, userResponseDTO } = await response.data;
 
-            if (!response.ok) {
-                throw new Error(data.message || 'Signup failed');
+            //const data = await response.json();
+            if(accessToken) {
+                localStorage.setItem('token', accessToken);
+            } else {
+                console.warn('No token received from backend');
             }
 
-            // Redirect to login page after successful signup
-            navigate('/login');
-        } catch (err) {
-            setError(err.message || 'Something went wrong. Please try again later.');
-        }
+            if (userResponseDTO) {
+                updateUser(userResponseDTO);
+            } else {
+                updateUser(null);
+            }
+            
+            navigate('/dashboard');
 
+        } catch (err) {
+            if (err.response && err.response.data.message) {
+                setError(err.response.data.message);
+            } else {
+                setError('An error occurred. Please try again later.');
+            }
+        }
     };
 
     return (
