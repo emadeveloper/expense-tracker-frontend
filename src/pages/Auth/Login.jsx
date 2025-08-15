@@ -18,20 +18,11 @@ const Login = () => {
     e.preventDefault();
 
     // Validate inputs
-    if (!usernameOrEmail.trim()) {
-      setError('Username or Email is required');
-      return;
-    }
+    if (!usernameOrEmail.trim()) return setError('Username or email is required');
 
-    if (!password.trim()) {
-      setError('Password is required');
-      return;
-    }
+    if (!password.trim()) return setError('Password is required');
 
-    if (password.length < 8) {
-      setError('Password must be at least 8 characters long');
-      return;
-    }
+    if (password.length < 8) return setError('Password must be at least 8 characters long');
 
     setError(null);
 
@@ -44,21 +35,15 @@ const Login = () => {
 
       const { accessToken, userResponseDTO } = response.data;
 
-      if (accessToken) {
-        localStorage.setItem('token', accessToken);
+      if (userResponseDTO && accessToken) {
+        updateUser(userResponseDTO, accessToken);
+        navigate('/dashboard');
       } else {
-        console.warn('No token received from backend');
+        console.warn('No token or user received from backend');
+        updateUser(null, null);
       }
 
-      if (userResponseDTO) {
-        updateUser(userResponseDTO);
-      } else {
-        updateUser(null);
-      }
-
-      navigate('/dashboard');
     } catch (err) {
-      localStorage.removeItem('token');
       updateUser(null);
 
       if (err.response && err.response.status === 401) {

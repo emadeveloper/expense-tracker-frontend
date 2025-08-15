@@ -1,0 +1,44 @@
+import React, { useContext, useEffect } from 'react'
+import { UserContext } from '../../context/UserContext'
+import Navbar from './Navbar';
+import SideMenu from './SideMenu';
+import { Navigate, useNavigate } from 'react-router-dom';
+
+const DashboardLayout = ({children, activeMenu}) => {
+
+    const { user, isLoading } = useContext(UserContext);
+    const navigate = useNavigate();
+
+    // Debug to check user state
+    console.log('DashboardLayout - user:', user);
+
+    useEffect(() => {
+        console.log('DashboardLayout useEffect - user:', user);
+        if (isLoading) {
+            return;
+        }
+
+        if (!user) {
+            navigate('/login');
+        }
+    }, [user, navigate, isLoading]);
+
+  return (
+    <div className=''>
+        <Navbar activeMenu = {activeMenu}/>
+
+        {user && (
+            <div className="flex">
+                <div className="max-[1080px]:hidden">
+                    <SideMenu activeMenu = {activeMenu}/>
+                </div>
+
+                <div className="grow mx-5">{children}</div>
+            </div>
+        )}
+
+    </div>
+  );
+};
+
+export default DashboardLayout;
