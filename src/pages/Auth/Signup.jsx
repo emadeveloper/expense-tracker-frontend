@@ -57,19 +57,6 @@ const Signup = () => {
 
         // Signup API call
         try {
-           /*  if (profilePic) {
-                const formData = new FormData();
-                formData.append('file', profilePic);
-                formData.append('upload_preset', 'your_upload_preset'); // Replace with your Cloudinary upload preset
-
-                const uploadResponse = await fetch('https://api.cloudinary.com/v1_1/your_cloud_name/image/upload', {
-                    method: 'POST',
-                    body: formData,
-                });
-
-                const uploadData = await uploadResponse.json();
-                profileImageURL = uploadData.secure_url; // Get the uploaded image URL
-            } */
             const response = await axiosInstance.post('/auth/signup', {
                 fullName,
                 username,

@@ -9,11 +9,7 @@ const DashboardLayout = ({children, activeMenu}) => {
     const { user, isLoading } = useContext(UserContext);
     const navigate = useNavigate();
 
-    // Debug to check user state
-    console.log('DashboardLayout - user:', user);
-
     useEffect(() => {
-        console.log('DashboardLayout useEffect - user:', user);
         if (isLoading) {
             return;
         }

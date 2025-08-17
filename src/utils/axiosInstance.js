@@ -25,8 +25,11 @@ axiosInstance.interceptors.response.use(response => {
 }, error => {
     if (error.response && error.response.status === 401) {
         // Handle unauthorized access, redirect to login
-        console.error('Unauthorized access - redirecting to login');
+        console.error('Unauthorized access - token might be expired, redirecting to login');
         // Optionally, redirect to login page here
+        localStorage.removeItem('user');
+        localStorage.removeItem('token');
+        window.location.href = '/login'; // Redirect to login page
     } else if (error.response && error.response.status === 403) {
         console.error('Forbidden - you do not have permission to access this resource');
     } else {
