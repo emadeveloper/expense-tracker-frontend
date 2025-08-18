@@ -1,50 +1,57 @@
-import React, { useContext } from 'react';
-import { UserContext } from '../../context/UserContext';
-import { useNavigate } from 'react-router-dom';
-import { SIDE_MENU_DATA } from '../../utils/data';
-import CharAvatar from '../Cards/CharAvatar';
+import React, { useContext } from "react";
+import { UserContext } from "../../context/UserContext";
+import { useNavigate } from "react-router-dom";
+import { SIDE_MENU_DATA } from "../../utils/data";
+import CharAvatar from "../Cards/CharAvatar";
 
-const SideMenu = ({activeMenu}) => {
-    const { user, clearUser } = useContext(UserContext);
+const SideMenu = ({ activeMenu }) => {
+  const { user, clearUser } = useContext(UserContext);
 
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
-    const handleClick = (route) => {
-        if (route === 'logout') {
-            handleLogout();
-            return;
-        };
-
-        navigate(route);
-    };
-
-    const handleLogout = () => {
-        localStorage.clear();
-        clearUser();
-        navigate('/login');
+  const handleClick = (route) => {
+    if (route === "logout") {
+      handleLogout();
+      return;
     }
-  return (
-    <div className='w-64 h-calc(100vh-61px) bg-white border-r border-gray-200/50 py-5 sticky top-[61px] z-20'>
-            {user && (
-                <div className='w-64 bg-gray-100 h-screen p-5'>
-                    <div className='flex flex-col items-center justify-center gap-4 mb-7 mt-3'>
-                        <CharAvatar username={user?.username} width='w-20' height='h-20' style='text-xl'/>
 
-                        <h5 className='text-gray-950 font-medium leading-6'>{user?.fullName || user?.username}</h5>
-                    </div>
-                        {SIDE_MENU_DATA.map((item, index) => (
-                            <button 
-                                key={`menu_${index}`} 
-                                className={`w-full flex items-center gap-4 text-[15px] ${activeMenu == item.label ? "text-white bg-primary" : ''} py-3 px-6 rounded-lg mb-3 hover:bg-primary hover:text-white transition-colors`}
-                                onClick={() => handleClick(item.path)}
-                                >
-                                <item.icon className='text-xl' /> {item.label}
-                            </button>
-                        ))}
-                </div>
-            )}
+    navigate(route);
+  };
+
+  const handleLogout = () => {
+    localStorage.clear();
+    clearUser();
+    navigate("/login");
+  };
+  return (
+    <div className="w-64 h-[calc(100vh-61px)] bg-white border-r border-gray-200/50 py-5 sticky top-[61px] z-20">
+      <div className="w-64 bg-gray-100 h-screen p-5">
+        <div className="flex flex-col items-center justify-center gap-4 mb-7 mt-3">
+          <CharAvatar
+            fullName={user?.fullName}
+            width="w-20"
+            height="h-20"
+            style="text-4xl font-bold bg-primary text-white rounded-full"
+          />
+
+          <h5 className="text-gray-950 font-medium leading-6">
+            {user?.fullName || user?.username}
+          </h5>
+        </div>
+        {SIDE_MENU_DATA.map((item, index) => (
+          <button
+            key={`menu_${index}`}
+            className={`w-full flex items-center gap-4 text-[15px] ${
+              activeMenu == item.label ? "text-white bg-primary" : ""
+            } py-3 px-6 rounded-lg mb-3 hover:bg-primary hover:text-white transition-colors`}
+            onClick={() => handleClick(item.path)}
+          >
+            <item.icon className="text-xl" /> {item.label}
+          </button>
+        ))}
+      </div>
     </div>
-  )
-}
+  );
+};
 
 export default SideMenu;
