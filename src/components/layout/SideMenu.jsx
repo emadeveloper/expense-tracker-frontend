@@ -24,7 +24,7 @@ const SideMenu = ({ activeMenu }) => {
     navigate("/login");
   };
   return (
-    <div className="w-64 h-[calc(100vh-61px)] bg-white border-r border-gray-200/50 py-5 sticky top-[61px] z-20">
+    <div className="w-64 h-[calc(100vh-61px)] bg-white border-r border-gray-200/50 sticky top-[61px] z-20">
       <div className="w-64 bg-gray-100 h-screen p-5">
         <div className="flex flex-col items-center justify-center gap-4 mb-7 mt-3">
           <CharAvatar
