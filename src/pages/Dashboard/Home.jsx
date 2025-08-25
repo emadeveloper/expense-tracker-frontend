@@ -7,7 +7,7 @@ import { IoMdCard } from 'react-icons/io';
 import InfoCard from '../../components/Cards/InfoCard';
 import { addThousandSeparators } from '../../utils/helper';
 import { LuWalletMinimal, LuHandCoins } from 'react-icons/lu';
-
+import RecentTransactionCard from '../../components/Cards/RecentTransactionCard';
 
 const Home = () => {
   useUserAuth();
@@ -44,6 +44,7 @@ const Home = () => {
   return (
     <DashboardLayout activeMenu='Dashboard'>
       <div className='my-5 mx-auto'>
+        <h2>Welcome, {dashboardData?.user.username}!</h2>
         <div className='grid grid-cols-1 md:grid-cols-3 gap-6'>
           <InfoCard
             icon={<IoMdCard />}
@@ -65,6 +66,21 @@ const Home = () => {
             value={addThousandSeparators(dashboardData?.expense || 0)}
             color='bg-red-500'
             />
+        </div>
+
+        <div className='grid grid-cols-1 md:grid-cols-3 gap-6 mt-6'>
+          <RecentTransactionCard
+            title='Latest Expense'
+            transactions={dashboardData?.latestExpense ? [dashboardData.latestExpense] : []} 
+            onSeeMore={() => navigate('/expenses/my-expenses')}
+            type={'expense'}
+          />
+          <RecentTransactionCard
+            title='Latest Income'
+            transactions={dashboardData?.latestIncome ? [dashboardData.latestIncome] : []} 
+            onSeeMore={() => navigate('/incomes/my-incomes')}
+            type={'income'}
+          />
         </div>
       </div>
     </DashboardLayout>
