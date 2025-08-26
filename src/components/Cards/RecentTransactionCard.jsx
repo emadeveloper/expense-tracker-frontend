@@ -44,4 +44,4 @@ const RecentTransactionCard = ({title, transactions, type, onSeeMore }) => {
   );
 };
 
-export default RecentTransactionCard
+export default RecentTransactionCard;
