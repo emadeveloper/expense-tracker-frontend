@@ -7,7 +7,8 @@ import { IoMdCard } from 'react-icons/io';
 import InfoCard from '../../components/Cards/InfoCard';
 import { addThousandSeparators } from '../../utils/helper';
 import { LuWalletMinimal, LuHandCoins } from 'react-icons/lu';
-import RecentTransactionCard from '../../components/Cards/RecentTransactionCard';
+import RecentTransactionCard from '../../components/Dashboard/RecentTransactionCard';
+import FinancialOverview from '../../components/Dashboard/FinancialOverview';
 
 const Home = () => {
   useUserAuth();
@@ -80,6 +81,12 @@ const Home = () => {
             transactions={dashboardData?.latestIncome ? [dashboardData.latestIncome] : []} 
             onSeeMore={() => navigate('/incomes/my-incomes')}
             type={'income'}
+          />
+
+          <FinancialOverview
+            totalBalance={dashboardData?.balance || 0}
+            totalIncome={dashboardData?.income || 0}
+            totalExpense={dashboardData?.expense || 0}
           />
         </div>
       </div>
