@@ -74,12 +74,14 @@ const Home = () => {
             title='Latest Expense'
             transactions={dashboardData?.latestExpense ? [dashboardData.latestExpense] : []} 
             onSeeMore={() => navigate('/expenses/my-expenses')}
+            onAddNew={() => navigate('/expenses')}
             type={'expense'}
           />
           <RecentTransactionCard
             title='Latest Income'
             transactions={dashboardData?.latestIncome ? [dashboardData.latestIncome] : []} 
             onSeeMore={() => navigate('/incomes/my-incomes')}
+            onAddNew={() => navigate('/incomes')}
             type={'income'}
           />
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   PieChart,
   Pie,
@@ -6,23 +6,37 @@ import {
   ResponsiveContainer,
   Legend,
   Tooltip,
-  Label
-} from 'recharts';
-import {motion, AnimatePresence } from "framer-motion";
-import CustomToolTip from './CustomToolTip';
-import CustomLegend from './CustomLegend';
+  Label,
+} from "recharts";
+import { motion, AnimatePresence } from "framer-motion";
+import CustomToolTip from "./CustomToolTip";
+import CustomLegend from "./CustomLegend";
 
 const CustomPieChart = ({ data, label, totalAmount, colors }) => {
   const [activeItem, setActiveItem] = useState(null);
 
-  const centerTitle = activeItem ? activeItem.name : label;
-  const centerValue = activeItem ? `$${activeItem.value}` : totalAmount;
+  const isEmpty =
+    !data || data.length === 0 || data.every((item) => item.amount === 0);
+
+  const chartData = isEmpty ? [{ name: "No Data", amount: 1 }] : data;
+
+  const centerTitle = isEmpty
+    ? "No Data"
+    : activeItem
+    ? activeItem.name
+    : label;
+
+  const centerValue = isEmpty
+    ? ""
+    : activeItem
+    ? `$${activeItem.value}`
+    : totalAmount;
 
   return (
     <ResponsiveContainer width="100%" height={300}>
       <PieChart>
         <Pie
-          data={data}
+          data={chartData}
           dataKey="amount"
           nameKey="name"
           cx="50%"
@@ -30,18 +44,20 @@ const CustomPieChart = ({ data, label, totalAmount, colors }) => {
           outerRadius={130}
           innerRadius={100}
           labelLine={false}
-          onMouseEnter={(data) => setActiveItem(data)}
-          onMouseLeave={() => setActiveItem(null)}
+          onMouseEnter={isEmpty ? undefined : (d) => setActiveItem(d)}
+          onMouseLeave={isEmpty ? undefined : () => setActiveItem(null)}
         >
-          {data.map((entry, index) => (
-            <Cell key={`cell-${index}`} fill={colors[index % colors.length]} />
+          {chartData.map((entry, index) => (
+            <Cell
+              key={`cell-${index}`}
+              fill={isEmpty ? "#e5e7eb" : colors[index % colors.length]}
+            />
           ))}
 
           <Label
             position="center"
             content={({ viewBox }) => {
               const { cx, cy } = viewBox;
-
               return (
                 <g>
                   <AnimatePresence mode="wait">
@@ -83,7 +99,6 @@ const CustomPieChart = ({ data, label, totalAmount, colors }) => {
             }}
           />
         </Pie>
-
         <Tooltip content={CustomToolTip} />
         <Legend content={CustomLegend} />
       </PieChart>
