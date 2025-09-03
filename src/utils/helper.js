@@ -28,3 +28,11 @@ export const addThousandSeparators = (num) => {
 
 
 }
+
+export const prepareExpenseBarChartData = (data = []) => {
+    
+    return data.map(item => ({
+        month: item.label ?? `${item.year}-${String(item.month).padStart(2, '0')}`,
+        amount: item.totalAmount ?? 0
+    }));
+};

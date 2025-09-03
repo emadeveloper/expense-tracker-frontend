@@ -9,6 +9,7 @@ import { addThousandSeparators } from '../../utils/helper';
 import { LuWalletMinimal, LuHandCoins } from 'react-icons/lu';
 import RecentTransactionCard from '../../components/Dashboard/RecentTransactionCard';
 import FinancialOverview from '../../components/Dashboard/FinancialOverview';
+import { Last30DaysExpenses } from '../../components/Dashboard/Last30DaysExpenses';
 
 const Home = () => {
   useUserAuth();
@@ -57,14 +58,14 @@ const Home = () => {
           <InfoCard
             icon={<LuWalletMinimal />}
             label= 'Total Incomes'
-            value={addThousandSeparators(dashboardData?.income || 0)}
+            value={addThousandSeparators(dashboardData?.totalIncomes || 0)}
             color='bg-green-500'
             />
           
           <InfoCard
             icon={<LuHandCoins />}
             label= 'Total Expenses'
-            value={addThousandSeparators(dashboardData?.expense || 0)}
+            value={addThousandSeparators(dashboardData?.totalExpenses || 0)}
             color='bg-red-500'
             />
         </div>
@@ -87,13 +88,17 @@ const Home = () => {
 
           <FinancialOverview
             totalBalance={dashboardData?.balance || 0}
-            totalIncome={dashboardData?.income || 0}
-            totalExpense={dashboardData?.expense || 0}
+            totalIncome={dashboardData?.totalIncomes || 0}
+            totalExpense={dashboardData?.totalExpenses || 0}
+          />
+
+          <Last30DaysExpenses
+            data={dashboardData?.monthlyExpenses || []}
           />
         </div>
       </div>
     </DashboardLayout>
-  )
-}
+  );
+};
 
 export default Home;

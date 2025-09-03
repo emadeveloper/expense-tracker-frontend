@@ -4,7 +4,7 @@ const CustomToolTip = ({ active, payload }) => {
   if (active && payload && payload.length) {
     return (
       <div className="bg-white shadow-md rounded-large p-2 border border-gray-300 ">
-        <p className="text-xs font-semibold text-blue-800 mb-1">
+        <p className='text-xs font-semibold text-blue-800 mb-1'>
           {payload[0].name}
         </p>
         <p className="text-sm text-gray-600">
