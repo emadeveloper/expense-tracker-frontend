@@ -9,7 +9,7 @@ import { addThousandSeparators } from '../../utils/helper';
 import { LuWalletMinimal, LuHandCoins } from 'react-icons/lu';
 import RecentTransactionCard from '../../components/Dashboard/RecentTransactionCard';
 import FinancialOverview from '../../components/Dashboard/FinancialOverview';
-import { Last30DaysExpenses } from '../../components/Dashboard/Last30DaysExpenses';
+import { Last30DaysData } from '../../components/Dashboard/Last30DaysData';
 
 const Home = () => {
   useUserAuth();
@@ -92,8 +92,16 @@ const Home = () => {
             totalExpense={dashboardData?.totalExpenses || 0}
           />
 
-          <Last30DaysExpenses
+          <Last30DaysData
             data={dashboardData?.monthlyExpenses || []}
+            title='Last 30 Days Expenses'
+            type='expense'
+          />
+          
+          <Last30DaysData
+            data={dashboardData?.monthlyIncomes || []}
+            title='Last 30 Days Incomes'
+            type='income'
           />
         </div>
       </div>

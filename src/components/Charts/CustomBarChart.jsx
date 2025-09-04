@@ -11,12 +11,11 @@ import {
   Tooltip,
 } from "recharts";
 
-const CustomBarChart = ({ data }) => {
+const CustomBarChart = ({ data, type }) => {
 
     // Function to alternate colors
-    const getBarColor = (index) => {
-        return index % 2 === 0 ? "#DA3C3C" : '#CFBEFB';
-    };
+    const getAmountStyles = () =>
+        type === "income" ? "#22c55e" : "#ef4444";
 
     const CustomTooltip = ({ active, payload}) => {
         if (active && payload && payload.length) {
@@ -53,7 +52,7 @@ const CustomBarChart = ({ data }) => {
             activeStyle={{ fill: "green" }}
           >
             {data.map((entry, index) => (
-              <Cell key={index} fill={getBarColor(index)} />
+              <Cell key={index} fill={getAmountStyles()} />
             ))};
           </Bar>
         </BarChart>
