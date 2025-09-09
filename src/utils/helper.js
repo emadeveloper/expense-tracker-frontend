@@ -1,7 +1,9 @@
+import moment from "moment";
+
 export const validateEmail = (email) => {
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return regex.test(email);
-}
+};
 
 export const getInitials = (fullName) => {
     if (!fullName) return '';
@@ -14,7 +16,7 @@ export const getInitials = (fullName) => {
     }
 
     return initials.toUpperCase();
-}
+};
 
 export const addThousandSeparators = (num) => {
     if (num == null || isNaN(num)) return '';
@@ -27,7 +29,7 @@ export const addThousandSeparators = (num) => {
     : formattedInteger;
 
 
-}
+};
 
 export const prepareExpenseBarChartData = (data = []) => {
     
@@ -35,4 +37,16 @@ export const prepareExpenseBarChartData = (data = []) => {
         month: item.label ?? `${item.year}-${String(item.month).padStart(2, '0')}`,
         amount: item.totalAmount ?? 0
     }));
+};
+
+export const prepareIncomeBarData = (data =[]) => {
+    const sortedData = [...data].sort((a, b) => new Date(a.date) - new Date(b.date));
+
+    const chartData = sortedData.map(item => ({
+        month: moment(item?.date).format('DD MMM'),
+        amount: item?.amount,
+        source: item?.source || 'Income'
+    }));
+
+    return chartData;
 };
