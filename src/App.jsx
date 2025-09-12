@@ -24,8 +24,8 @@ const App = () => {
             <Route path="login" exact element={<Login />} />
             <Route path="signUp" exact element={<Signup />} />
             <Route path="dashboard" exact element={<Home />} />
-            <Route path="income" exact element={<Income />} />
-            <Route path="expense" exact element={<Expense />} />
+            <Route path="incomes" exact element={<Income />} />
+            <Route path="expenses" exact element={<Expense />} />
           </Routes>
         </Router>
       </div>

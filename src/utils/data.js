@@ -16,13 +16,13 @@ export const SIDE_MENU_DATA = [
         id: '02',
         label: 'Income',
         icon: LuWalletMinimal,
-        path: '/income',
+        path: '/incomes',
     },
     {
         id: '03',
         label: 'Expense',
         icon: LuHandCoins,
-        path: '/expense',
+        path: '/expenses',
     },
     {
         id: '04',
