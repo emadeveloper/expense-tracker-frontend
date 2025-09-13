@@ -152,14 +152,14 @@ const Home = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
           <LastTransactions
             transactions={lastFiveIncomes || []}
-            title="Last 5 Incomes"
+            title={lastFiveIncomes ? 'Last Incomes' : 'No Expenses Found'}
             onSeeMore={() => navigate("/incomes")}
             type="income"
           />
           
           <LastTransactions
             transactions={lastFiveExpenses || []}
-            title="Last 5 Expenses"
+            title={lastFiveExpenses ? 'Last Expenses' : 'No Expenses Found'}
             onSeeMore={() => navigate("/expenses")}
             type="expense"
           />
