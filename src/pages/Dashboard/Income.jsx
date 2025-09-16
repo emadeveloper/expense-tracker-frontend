@@ -7,12 +7,17 @@ import AddIncomeForm from "../../components/Incomes/AddIncomeForm";
 import toast from "react-hot-toast";
 import IncomeList from "../../components/Incomes/IncomeList";
 import DeleteAlert from "../../components/Cards/DeleteAlert";
+import UpdateIncomeForm from "../../components/Incomes/UpdateIncomeForm";
 
 const Income = () => {
   const [openAddIncomeModal, setOpenAddIncomeModal] = useState(false);
   const [incomeData, setIncomeData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [openDeleteAlert, setOpenDeleteAlert] = useState({
+    show: false,
+    data: null,
+  });
+  const [openUpdateModal, setOpenUpdateModal] = useState({
     show: false,
     data: null,
   });
@@ -105,6 +110,22 @@ const Income = () => {
     }
   };
 
+  // Handle Update Income
+  const handleUpdateIncome = async (incomeId, updatedIncome) => {
+    try {
+      await axiosInstance.put(`/incomes/${incomeId}`, updatedIncome);
+      setOpenUpdateModal({ show: false, data: null});
+      toast.success("Income updated successfully");
+      fetchIncomeDetails();
+    } catch (error) {
+      console.log(
+        "Error updating income:",
+        error.response?.data?.message || error.message
+      );
+      toast.error("Error updating income. Please try again.");
+    }
+  };
+
   // Handle Download Income Report
   const handleDownloadIncomeReport = async () => {};
 
@@ -125,14 +146,19 @@ const Income = () => {
           </div>
         </div>
 
+        {/* All Incomes */}
         <IncomeList
           transactions={incomeData}
           onDelete={(id) => {
             setOpenDeleteAlert({ show: true, data: id });
           }}
           onDownloadReport={handleDownloadIncomeReport}
+          onUpdate={(income) => {
+            setOpenUpdateModal({ show: true, data: income });
+          }}
         />
 
+        {/* Modals */}
         <Modal
           isOpen={openAddIncomeModal}
           onClose={() => setOpenAddIncomeModal(false)}
@@ -143,12 +169,23 @@ const Income = () => {
 
         <Modal
           isOpen={openDeleteAlert.show}
-          onClose={() => setOpenDeleteAlert({ show: false, data: null})}
-          title='Delete Income'
+          onClose={() => setOpenDeleteAlert({ show: false, data: null })}
+          title="Delete Income"
         >
           <DeleteAlert
-            content='Are you sure you want to delete this income?'
+            content="Are you sure you want to delete this income?"
             onDelete={() => handleDeleteIncome(openDeleteAlert.data)}
+          />
+        </Modal>
+
+        <Modal
+          isOpen={openUpdateModal.show}
+          onClose={() => setOpenUpdateModal({ show: false, data: null })}
+          title="Update Income"
+        >
+          <UpdateIncomeForm
+            income={openUpdateModal.data}
+            onUpdate={handleUpdateIncome}
           />
         </Modal>
       </div>
