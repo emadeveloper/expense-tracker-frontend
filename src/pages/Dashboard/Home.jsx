@@ -31,7 +31,6 @@ const Home = () => {
       const response = await axiosInstance.get("/stats/summary");
 
       if (response.data) {
-        console.log(response.data);
         setDashboardData(response.data);
       }
     } catch (error) {
@@ -49,7 +48,6 @@ const Home = () => {
 
       const response = await axiosInstance.get("incomes/my-incomes/last-5");
       if (response.data) {
-        console.log(response.data);
         setFiveLastIncomes(response.data);
       }
     } catch (error) {
@@ -67,7 +65,6 @@ const Home = () => {
 
       const response = await axiosInstance.get('/expenses/my-expenses/last-5');
       if (response.data) {
-        console.log(response.data);
         setFiveLastExpenses(response.data);
       }
     } catch (error) {
@@ -123,7 +120,7 @@ const Home = () => {
             transactions={
               dashboardData?.latestExpense ? [dashboardData.latestExpense] : []
             }
-            onSeeMore={() => navigate("/expenses/my-expenses")}
+            onSeeMore={() => navigate("/expenses")}
             onAddNew={() => navigate("/expenses")}
             type={"expense"}
           />
@@ -143,7 +140,7 @@ const Home = () => {
             transactions={
               dashboardData?.expenses.max ? [dashboardData.expenses.max] : []
             }
-            onSeeMore={() => navigate("/expenses/my-expenses")}
+            onSeeMore={() => navigate("/expenses")}
             onAddNew={() => navigate("/expenses-add")}
             type={"expense"}
           />

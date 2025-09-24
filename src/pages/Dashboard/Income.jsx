@@ -8,8 +8,11 @@ import toast from "react-hot-toast";
 import IncomeList from "../../components/Incomes/IncomeList";
 import DeleteAlert from "../../components/Cards/DeleteAlert";
 import UpdateIncomeForm from "../../components/Incomes/UpdateIncomeForm";
+import { useUserAuth } from "../../hooks/useUserAuth";
 
 const Income = () => {
+  useUserAuth();
+
   const [openAddIncomeModal, setOpenAddIncomeModal] = useState(false);
   const [incomeData, setIncomeData] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -32,7 +35,6 @@ const Income = () => {
       const response = await axiosInstance.get("/incomes/my-incomes");
 
       if (response.data) {
-        console.log(response.data);
         setIncomeData(response.data);
       }
     } catch (error) {
@@ -48,7 +50,7 @@ const Income = () => {
 
     // Validation Checks
     if (!title.trim()) {
-      toast.error("Income source is required");
+      toast.error("Income title is required");
       return;
     }
 

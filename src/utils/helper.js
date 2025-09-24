@@ -50,3 +50,19 @@ export const prepareIncomeBarData = (data =[]) => {
 
     return chartData;
 };
+
+export const prepareExpenseLineBarData = (data = []) => {
+    if (!data || !Array.isArray(data) || data.length === 0) {
+      return []
+    }
+  
+    const sortedData = [...data].sort((a, b) => new Date(a.date) - new Date(b.date));
+  
+    const chartData = sortedData.map(item => ({
+      date: moment(item?.date).format('DD MMM'),
+      amount: item?.amount,
+      category: item?.category || 'Expense'
+    }));
+    
+    return chartData;
+};
