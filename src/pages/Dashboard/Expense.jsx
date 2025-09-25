@@ -13,7 +13,6 @@ import DeleteAlert from "../../components/Cards/DeleteAlert";
 const Expense = () => {
   useUserAuth();
 
-  const [chartData, setChartData] = useState([]);
   const [openAddExpenseModal, setOpenAddExpenseModal] = useState(false);
   const [expenseData, setExpenseData] = useState(null);
   const [loading, setLoading] = useState(false);

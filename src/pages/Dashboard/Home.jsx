@@ -63,12 +63,12 @@ const Home = () => {
 
       setLoading(true);
 
-      const response = await axiosInstance.get('/expenses/my-expenses/last-5');
+      const response = await axiosInstance.get("/expenses/my-expenses/last-5");
       if (response.data) {
         setFiveLastExpenses(response.data);
       }
     } catch (error) {
-      console.log('Error fetching last 5 expenses:', error);
+      console.log("Error fetching last 5 expenses:", error);
     } finally {
       setLoading(false);
     }
@@ -83,7 +83,7 @@ const Home = () => {
     fetchLast5Incomes();
     return () => {};
   }, []);
-  
+
   useEffect(() => {
     fetchLast5Expenses();
     return () => {};
@@ -134,7 +134,7 @@ const Home = () => {
             onAddNew={() => navigate("/incomes")}
             type={"income"}
           />
-          
+
           <RecentTransactionCard
             title="Max Expense"
             transactions={
@@ -149,14 +149,14 @@ const Home = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
           <LastTransactions
             transactions={lastFiveIncomes || []}
-            title={lastFiveIncomes ? 'Last Incomes' : 'No Expenses Found'}
+            title={lastFiveIncomes ? "Last Incomes" : "No Expenses Found"}
             onSeeMore={() => navigate("/incomes")}
             type="income"
           />
-          
+
           <LastTransactions
             transactions={lastFiveExpenses || []}
-            title={lastFiveExpenses ? 'Last Expenses' : 'No Expenses Found'}
+            title={lastFiveExpenses ? "Last Expenses" : "No Expenses Found"}
             onSeeMore={() => navigate("/expenses")}
             type="expense"
           />
