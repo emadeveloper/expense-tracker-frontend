@@ -29,7 +29,7 @@ const Home = () => {
 
     try {
       const response = await axiosInstance.get("/stats/summary");
-
+      
       if (response.data) {
         setDashboardData(response.data);
       }
