@@ -1,12 +1,32 @@
-# React + Vite
+# Expense Tracker - Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Frontend de la aplicación **Expense Tracker**, desarrollada con **React.js**, **TailwindCSS** y **Axios**.  
+Permite a los usuarios gestionar ingresos y gastos, visualizar estadísticas y descargar reportes en PDF.
 
-Currently, two official plugins are available:
+## Demo
+Link al despliegue en Vercel/Netlify (Pendiente)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Repositorio Backend
+El backend de esta aplicación está desarrollado en **Java + Spring Boot** y se encuentra aquí:  
+➡️ [Expense Tracker Backend](https://github.com/emadeveloper/expense-tracker)
 
-## Expanding the ESLint configuration
+## Funcionalidades
+- Autenticación con JWT (login / registro).
+- Dashboard con resumen de ingresos y gastos.
+- CRUD de ingresos y gastos.
+- Generación de reportes en PDF.
+- UI responsiva con TailwindCSS.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Tecnologías utilizadas
+- **React.js**
+- **TailwindCSS**
+- **Axios** para comunicación con el backend
+- **React Router DOM**
+- **React Hot Toast**
+- **React-PDF Renderer**
+
+## Instalación y uso
+1. Clonar el repositorio:
+   ```bash
+   git clone https://github.com/usuario/expense-tracker-frontend.git
+   cd expense-tracker-frontend
