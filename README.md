@@ -30,3 +30,18 @@ El backend de esta aplicación está desarrollado en **Java + Spring Boot** y se
    ```bash
    git clone https://github.com/usuario/expense-tracker-frontend.git
    cd expense-tracker-frontend
+   Instalar dependencias:
+
+2. Instalar Dependencias
+   ```bash
+   npm install
+3. Configurar variables de entorno en .env:
+   ```bash
+   VITE_API_BASE_URL=http://localhost:8080/api/v1
+4. Ejecutar en modo desarrollo:
+   ```bash
+   npm run dev
+5. Acceder a la aplicación en:
+   ```bash
+    http://localhost:5173
+
