@@ -61,11 +61,11 @@ const styles = StyleSheet.create({
   
   
 
-const MyDocument = ({ data = [] }) => (
+const MyDocument = ({ data = [], title }) => (
   <Document>
     <Page size="A4" style={styles.page}>
       <Text style={{ fontSize: 16, marginBottom: 10, textAlign: "center" }}>
-        Expense Report
+        {title === "expenses" ? "Expenses Report" : "Incomes Report"}
       </Text>
 
       {/* Table */}
@@ -113,16 +113,16 @@ const MyDocument = ({ data = [] }) => (
           fontWeight: "bold",
         }}
       >
-        Total Expenses: ${data.reduce((acc, curr) => acc + curr.amount, 0)}
+        {title === "expenses" ? "Total Expenses" : "Total Incomes" } ${data.reduce((acc, curr) => acc + curr.amount, 0)}
       </Text>
     </Page>
   </Document>
 );
 
-const ExportPdfButton = ({ data }) => (
+const ExportPdfButton = ({ data, title }) => (
   <PDFDownloadLink
-    document={<MyDocument data={data} />}
-    fileName="expenses_report.pdf"
+    document={<MyDocument data={data} title={title}/>}
+    fileName= {title === "expenses" ? "expenses_report.pdf" : "incomes_report.pdf"}
     className="no-underline cursor-pointer"
   >
     {({ loading }) =>

@@ -128,9 +128,6 @@ const Income = () => {
     }
   };
 
-  // Handle Download Income Report
-  const handleDownloadIncomeReport = async () => {};
-
   useEffect(() => {
     fetchIncomeDetails();
     return () => {};
@@ -154,7 +151,6 @@ const Income = () => {
           onDelete={(id) => {
             setOpenDeleteAlert({ show: true, data: id });
           }}
-          onDownloadReport={handleDownloadIncomeReport}
           onUpdate={(income) => {
             setOpenUpdateModal({ show: true, data: income });
           }}

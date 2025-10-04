@@ -124,11 +124,7 @@ const Expense = () => {
     }
   };
 
-  // Handle Download Report
-  const handleDownloadReport = async () => {};
-
   // Get all expenses
-
   useEffect(() => {
     fetchExpenseDetails();
     return () => {};
@@ -150,7 +146,6 @@ const Expense = () => {
         <ExpenseList
           transactions={expenseData}
           onDelete={(id) => setOpenDeleteAlert({ show: true, data: id })}
-          onDownloadReport={handleDownloadReport}
           onUpdate={(id) => setOpenUpdateModal({ show: true, data: id })}
         />
       </div>
