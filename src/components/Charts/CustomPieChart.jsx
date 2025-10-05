@@ -44,13 +44,12 @@ const CustomPieChart = ({ data, label, totalAmount, colors }) => {
     ? `$${activeItem.value}`
     : totalAmount;
 
-  // Ajustes dinámicos para distintos tamaños
   const chartHeight = isMobile ? 260 : isTablet ? 300 : 340;
   const outerRadius = isMobile ? 80 : isTablet ? 100 : 130;
   const innerRadius = isMobile ? 55 : isTablet ? 70 : 100;
 
   return (
-    <div className="flex flex-col items-center justify-center w-full">
+    <div className="flex flex-col items-center justify-center w-full max-w-[600px] mx-auto overflow-hidden">
       <ResponsiveContainer
         width={isTablet ? "90%" : "100%"}
         height={chartHeight}
