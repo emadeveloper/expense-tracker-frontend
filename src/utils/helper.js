@@ -28,7 +28,6 @@ export const addThousandSeparators = (num) => {
     ? `${formattedInteger}.${fractionalPart}`
     : formattedInteger;
 
-
 };
 
 export const prepareExpenseBarChartData = (data = []) => {
@@ -65,4 +64,10 @@ export const prepareExpenseLineBarData = (data = []) => {
     }));
     
     return chartData;
+};
+
+export const formatCurrency = (value) => {
+    const num = Number(String(value).replace(/,/g, ''));
+    if (isNaN(num)) return "-";
+    return num.toLocaleString('es-AR', { minimumFractionDigits: 2 });
 };

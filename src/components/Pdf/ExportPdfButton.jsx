@@ -131,7 +131,7 @@ const ExportPdfButton = ({ data, title }) => (
           Generating PDF...
         </button>
       ) : (
-        <button className="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/80 transition-colors">
+        <button className="flex justify-center items-center cursor-pointer text-sm px-4 py-2 bg-primary text-white font-bold rounded-lg hover:bg-primary/80 transition-colors">
           Download PDF
         </button>
       )
